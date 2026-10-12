@@ -1,0 +1,35 @@
+# env / secrets
+.env
+.env.local
+*.pem
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+backend/codein.db
+backend/*.db
+
+# node
+node_modules/
+dist/
+.turbo/
+*.tsbuildinfo
+
+# ide / os
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# logs
+*.log
+npm-debug.log*
+
+.tools/
+github/
+
