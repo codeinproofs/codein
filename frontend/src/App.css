@@ -1,0 +1,109 @@
+/* ------------------------------------------------------------------ */
+/* Terminal / CRT aesthetic — scoped visual effects for Terminal.tsx   */
+/* and friends. Kept separate from index.css (global resets/vars) to   */
+/* mirror the required file structure.                                 */
+/* ------------------------------------------------------------------ */
+
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Subtle horizontal scanline band sweeping down the terminal */
+.crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(59, 130, 246, 0.05) 45%,
+    rgba(139, 92, 246, 0.08) 50%,
+    rgba(59, 130, 246, 0.05) 55%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  animation: scanline 7s linear infinite;
+}
+
+/* Fine static scanline texture across the whole surface */
+.crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.5;
+}
+
+.crt-screen > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Faint vignette on the terminal frame */
+.terminal-frame {
+  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.06), transparent 60%),
+    #0d0d14;
+  border: 1px solid var(--term-border);
+}
+
+/* Grid-paper backdrop used behind the hero / page shells */
+.grid-backdrop {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: center;
+}
+
+/* Blinking terminal cursor block */
+.terminal-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  background: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+  vertical-align: text-bottom;
+  animation: blinkCursor 1s step-end infinite;
+}
+
+/* App card hover lift + glow border */
+.app-card {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.app-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(59, 130, 246, 0.45);
+  box-shadow: 0 12px 32px -12px rgba(59, 130, 246, 0.35);
+}
+
+/* Status dot pulse (used inside StatusBadge) */
+.status-dot-pulse {
+  position: relative;
+}
+.status-dot-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.4;
+  animation: glowPulse 2.2s ease-in-out infinite;
+}
+
+/* Code viewer line-number gutter */
+.code-gutter {
+  user-select: none;
+  color: #4b5260;
+  border-right: 1px solid var(--term-border);
+}

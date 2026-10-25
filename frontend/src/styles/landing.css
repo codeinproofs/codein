@@ -1,0 +1,335 @@
+/**
+ * Landing typography system — neo-grotesk, hard scale contrast, micro-tracking.
+ * Scoped under `.land` to avoid leaking into the IDE workspace.
+ */
+
+.land {
+  --land-ink: #e8e9ed; /* cold graphite milk — not pure white */
+  --land-ink-soft: #c4c6ce;
+  --land-mute: #8b8e99; /* body / descriptions */
+  --land-faint: #5c5f6b; /* eyebrows, meta */
+  --land-line: rgba(232, 233, 237, 0.1);
+  --land-surface: rgba(12, 12, 18, 0.55);
+  --land-bg: #07070b;
+
+  font-family: Inter, "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
+  color: var(--land-ink);
+  background-color: var(--land-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Giant ghost section titles — soft asymmetry, no layout break */
+.land-bleed-type {
+  position: absolute;
+  z-index: 0;
+  margin: 0;
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.055em;
+  color: var(--land-ink);
+  opacity: 0; /* revealed by GSAP */
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  font-size: clamp(5.5rem, 16vw, 13rem);
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .land-bleed-type {
+    opacity: 0.055;
+    will-change: auto;
+  }
+}
+
+/* ——— Eyebrow / kicker ——— */
+.land-eyebrow {
+  margin: 0;
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--land-faint);
+  opacity: 0.85;
+}
+
+/* ——— Display headings ——— */
+.land-h1 {
+  margin: 0;
+  font-size: clamp(2.75rem, 7vw, 4.75rem); /* ~44 → 76 */
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--land-ink);
+}
+
+.land-h1-sub {
+  color: var(--land-ink-soft);
+}
+
+.land-h2 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.25rem); /* ~32 → 52 */
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--land-ink);
+}
+
+.land-h3 {
+  margin: 0;
+  font-size: 1.25rem; /* 20px */
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--land-ink);
+}
+
+/* ——— Body / supporting ——— */
+.land-body {
+  margin: 0;
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: var(--land-mute);
+}
+
+.land-body-sm {
+  margin: 0;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  color: var(--land-mute);
+}
+
+.land-stat {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--land-ink);
+}
+
+.land-mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--land-faint);
+}
+
+/* ——— Buttons (studio CTAs) ———
+   Elongated · rounded-full only · no AI blue glow · fill-in hover
+*/
+.land-btn {
+  --land-ease: cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  padding: 1.15rem 2.65rem; /* elongated: py ≈ 18 · px ≈ 42 */
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    color 0.5s var(--land-ease),
+    border-color 0.5s var(--land-ease),
+    background-color 0.5s var(--land-ease),
+    transform 0.5s var(--land-ease);
+}
+
+.land-btn:focus-visible {
+  outline: 1px solid rgba(232, 233, 237, 0.45);
+  outline-offset: 3px;
+}
+
+.land-btn-label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  transition: transform 0.5s var(--land-ease);
+}
+
+.land-btn-arrow {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.5s var(--land-ease);
+}
+
+.land-btn-arrow svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.land-btn:hover .land-btn-label {
+  transform: translateX(2px);
+}
+
+.land-btn:hover .land-btn-arrow {
+  transform: translateX(5px);
+}
+
+.land-btn:active {
+  transform: scale(0.985);
+}
+
+/* Compact nav size — still elongated, still full-pill */
+.land-btn-sm {
+  padding: 0.6rem 1.35rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  gap: 0.45rem;
+}
+
+.land-btn-sm .land-btn-arrow {
+  width: 11px;
+  height: 11px;
+}
+
+/* Fill layer shared by variants */
+.land-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  transition: transform 0.55s var(--land-ease);
+  pointer-events: none;
+}
+
+.land-btn:hover::before {
+  transform: scaleY(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .land-btn,
+  .land-btn::before,
+  .land-btn-label,
+  .land-btn-arrow {
+    transition-duration: 0.01ms !important;
+  }
+  .land-btn:hover .land-btn-label,
+  .land-btn:hover .land-btn-arrow {
+    transform: none;
+  }
+}
+
+/* Primary — solid ink at rest; page-bg fills upward on hover → inverted type */
+.land-btn-primary {
+  background: var(--land-ink);
+  color: var(--land-bg);
+  border-color: var(--land-ink);
+  box-shadow: none;
+}
+
+.land-btn-primary::before {
+  background: var(--land-bg);
+  transform-origin: bottom center;
+}
+
+.land-btn-primary:hover {
+  color: var(--land-ink);
+  border-color: rgba(232, 233, 237, 0.35);
+}
+
+/* Ghost — glass + hairline; ink fills left→right on hover */
+.land-btn-ghost {
+  background: rgba(232, 233, 237, 0.03);
+  color: var(--land-ink-soft);
+  border-color: rgba(232, 233, 237, 0.12);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.land-btn-ghost::before {
+  background: var(--land-ink);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.land-btn-ghost:hover::before {
+  transform: scaleX(1);
+}
+
+.land-btn-ghost:hover {
+  color: var(--land-bg);
+  border-color: var(--land-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Accent — brand violet (no template blue / no glow) */
+.land-btn-accent {
+  background: transparent;
+  color: #c4b5fd;
+  border-color: rgba(155, 138, 251, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.land-btn-accent::before {
+  background: #9b8afb;
+  transform-origin: bottom center;
+}
+
+.land-btn-accent:hover {
+  color: #07070b;
+  border-color: #9b8afb;
+}
+
+/* ——— Surfaces ——— */
+.land-card {
+  border: 1px solid var(--land-line);
+  background: var(--land-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.land-nav-link {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--land-faint);
+  transition: color 0.2s ease;
+}
+
+.land-nav-link:hover {
+  color: var(--land-ink-soft);
+}
+
+.land-brand {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--land-ink);
+}
+
+.land-brand span {
+  color: #9b8afb;
+  font-weight: 500;
+}
